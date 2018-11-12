@@ -1,93 +1,109 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>����Ļ����</title>
-    <style type="text/css">
-      body{
-        margin: 0;
-        overflow: hidden;
-        background: #303035;
-      }
-    </style>
-  </head>
-  <body>
-    <canvas></canvas>
-    <div id="container" class="container"></div>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我们相爱的日志</title>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
-    <script type="text/javascript">
-      var canvas = document.querySelector("canvas");
-      var ctx = canvas.getContext("2d");
+<style type="text/css">
+@font-face {
+	font-family: digit;
+	src: url('digital-7_mono.ttf') format("truetype");
+}
+</style>
 
-      var ww = window.innerWidth;
-      var wh = window.innerHeight;
+<link href="css/default.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/garden.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
 
-      var hearts = [];
+</head>
 
-      function init(){
-        requestAnimationFrame(render);
-        canvas.width = ww;
-        canvas.height = wh;
-        for(var i = 0; i < 100; i++){
-          hearts.push(new Heart());
-        }
-      }
+<body>
 
-      function Heart() {
-        this.x = Math.random() * ww;
-        this.y = Math.random() * wh;
-        this.opacity = (Math.random() * 0.5) + 0.5;
-        this.vel = {
-          x: (Math.random() - 0.5) * 4,
-          y: (Math.random() - 0.5) * 4
-        };
-        this.targetScale = (Math.random() * 0.15) + 0.02;
-        this.scale = this.targetScale * Math.random();
-      }
+<div id="mainDiv">
+	<div id="content">
+		<div id="code">
+			<span class="comments">/**</span><br />
+			<span class="space"/><span class="comments">*我们在2015—03-18,</span><br />
+			<span class="space"/><span class="comments">*相恋于2015—03-30.</span><br />
+			<span class="space"/><span class="comments">*/</span><br />
+			Boy name = <span class="keyword">大头</span><br />
+			Girl name = <span class="keyword">吱吱</span><br />
+			<span class="comments"></span><br />
+			The boy love the girl;<br />
+			<span class="comments"></span><br />
+			The girl loved the boy;<br />
+			<span class="comments">// AS time goes on.</span><br />
+			The boy can not be separated the girl;<br />
+			<span class="comments">// At the same time.</span><br />
+			The girl can not be separated the boy;<br />
+			<span class="comments">// Both wind and snow all over the sky.</span><br />
+			<span class="comments">// Whether on foot or 5 kilometers.</span><br />
+			<span class="keyword">The boy</span> very <span class="keyword">happy</span>;<br />
+			<span class="keyword">The girl</span> is also very <span class="keyword">happy</span>;<br />
+			<span class="placeholder"/><span class="comments">// Whether it is right now</span><br />
+			<span class="placeholder"/><span class="comments">// Still in the distant future.</span><br />
+			<span class="placeholder"/>The boy has but one dream;<br />
+			<span class="comments">// The boy wants the girl could well have been happy.</span><br />
+			<br>
+			<br>
+			I want to say:<br />
+			Baby, I love you forever;<br />
+		</div>
+		<div id="loveHeart">
+			<canvas id="garden"></canvas>
+			<div id="words">
+				<div id="messages">
+					亲爱的，这是我们相爱在一起的时光。
+					<div id="elapseClock"></div>
+				</div>
+				<div id="loveu">
+					爱你直到永永远远。<br/>
+					<div class="signature">- 大头</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="copyright">
+		<a href="#">....</a><br />
+		<a href="#">....</a><br />
+		
+	</div>
+</div>
 
-      Heart.prototype.update = function(){
-        this.x += this.vel.x;
-        this.y += this.vel.y;
+<script type="text/javascript">
+var offsetX = $("#loveHeart").width() / 2;
+var offsetY = $("#loveHeart").height() / 2 - 55;
+var together = new Date();
+together.setFullYear(2015, 3, 30);
+together.setHours(20);
+together.setMinutes(0);
+together.setSeconds(0);
+together.setMilliseconds(0);
 
-        this.scale += (this.targetScale - this.scale) * 0.01;
-        if(this.x - this.width > ww || this.x + this.width < 0){
-          this.scale = 0;
-          this.x = Math.random() * ww;
-        }
-        if(this.y - this.height > wh || this.y + this.height < 0){
-          this.scale = 0;
-          this.y = Math.random() * wh;
-        }
-        this.width = 473.8 * this.scale;
-        this.height = 408.6 * this.scale;
-      }
-      Heart.prototype.draw = function(){
-        ctx.globalAlpha = this.opacity;
-        ctx.drawImage(heartImage, this.x - this.width * 0.5, this.y - this.height * 0.5,this.width, this.height);
-      }
+if (!document.createElement('canvas').getContext) {
+	var msg = document.createElement("div");
+	msg.id = "errorMsg";
+	msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+	document.body.appendChild(msg);
+	$("#code").css("display", "none")
+	$("#copyright").css("position", "absolute");
+	$("#copyright").css("bottom", "10px");
+	document.execCommand("stop");
+} else {
+	setTimeout(function () {
+		startHeartAnimation();
+	}, 5000);
 
-      function render(){
-        ctx.clearRect(0, 0, ww, wh);
-        // ctx.globalAlpha = 1;
-        // ctx.fillStyle = "rgba(255,255,255,0.3)";
-        // ctx.fillRect(0, 0, ww, wh);
-        for(var i=0; i<100; i++){
-          hearts[i].update();
-          hearts[i].draw();
-        }
-        requestAnimationFrame(render);
-      }
+	timeElapse(together);
+	setInterval(function () {
+		timeElapse(together);
+	}, 500);
 
-      var heartImage = new Image();
-      heartImage.onload = init();
-      heartImage.src =  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NzMuOHB4IiBoZWlnaHQ9IjQwOC42cHgiIHZpZXdCb3g9IjAgMCA0NzMuOCA0MDguNiI+PHBhdGggZmlsbD0iI2QzMjkzMiIgZD0iTTQwNC42LDE2LjZDMzg1LjQsNi4xLDM2My41LDAsMzQwLDBjLTQxLjUsMC03OC41LDE4LjktMTAzLDQ4LjVDMjEyLjMsMTguOSwxNzUuMywwLDEzMy44LDAgYy0yMy4zLDAtNDUuMyw2LjEtNjQuNSwxNi42QzI3LjksMzkuNSwwLDgzLjQsMCwxMzMuOWMwLDE0LjQsMi40LDI4LjMsNi42LDQxLjJDMjkuNiwyNzguNCwyMzcsNDA4LjYsMjM3LDQwOC42IHMyMDcuMi0xMzAuMiwyMzAuMi0yMzMuNWM0LjMtMTIuOSw2LjYtMjYuOCw2LjYtNDEuMkM0NzMuOCw4My40LDQ0NS45LDM5LjYsNDA0LjYsMTYuNnoiLz48L3N2Zz4=";
+	adjustCodePosition();
+	$("#code").typewriter();
+}
+</script>
 
-      window.addEventListener("resize",function(){
-        ww = window.innerWidth;
-        wh = window.innerHeight;
-      })
-
-    </script>
-  </body>
+</body>
 </html>
